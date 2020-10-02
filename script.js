@@ -47,78 +47,72 @@
 $(document).ready(function () {
 
 
-
   // global variables
-  var cDay = document.getElementById("currentDay");
-  // var row = $("<main>");
 
   var timeBlock = [
     {
       label: "9:00 am",
-      value: 0900,
+      tValue: "09:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "10:00 am",
-      value: 1000,
+      tValue: "10:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "11:00 am",
-      value: 1100,
+      tValue: "11:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "12:00 pm",
-      value: 1200,
+      tValue: "12:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "1:00 pm",
-      value: 1300,
+      tValue: "13:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "2:00 pm",
-      value: 1400,
+      tValue: "14:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "3:00 pm",
-      value: 1500,
+      tValue: "15:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "4:00 pm",
-      value: 1600,
+      tValue: "16:00",
       userInputName: "",
       userInputDesc: "",
     },
     {
       label: "5:00 pm",
-      value: 1700,
+      tValue: "17:00",
       userInputName: "",
       userInputDesc: "",
     },
   ]
 
 
+
   // functions
 
   // "display date & time" function
-  // grab currentDay
   // attach date & time there
-  // call buildTimeBlocks()
-  function currentDay() {
-
-  }
+  $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY HH:mm"));
 
 
   // build the page
@@ -140,39 +134,61 @@ $(document).ready(function () {
 
   // create columns
   // label hour blocks
+  // class hour blocks, time-blocks and saveBtn
+  // append columns to rows
   $("div.row").each(function (i) {
     var labelCol = $("<div>");
     var inputCol = $("<div>");
+    var saveCol = $("<button>");
+    var timeValue = timeBlock[i].tValue;
+
     labelCol
       .addClass("col-2 hour")
-    .text(timeBlock[i].label)
+      .text(timeBlock[i].label)
     inputCol
-      .addClass("col-10 time-block")
+      .addClass("col-9 time-block")
+      .attr("data-time", timeValue)
+    saveCol
+      .addClass("col-1 saveBtn")
+      .text("Save")
+      .attr("data-time", timeValue)
     $(this).append(labelCol);
     $(this).append(inputCol);
+    $(this).append(saveCol);
+
+    var isFuture = $(dayjs().isBefore((inputCol).attr("data-time"), "hour"));
+    // var isSame = $(dayjs().isSame(".data-time", "hour"));
+    // var isPast = $(dayjs().isAfter(".data-time", "hour"));
+    if (isFuture === true) {
+      inputCol.addClass("future");
+      // } else if (isSame === true) {
+      //   inputCol.addClass("present");
+      // } else if (isPast === true) {
+      //   inputCol.addClass("past");
+      // }
+    }
   })
 
 
-  // label timeblocks 9am-5pm
-  // labels in own column on left side?
   // connect timeblocks to current time
   // call colorTimeBlocks()
-  function labelTimeBlocks() {
-
-  }
+  // var isFuture = $(dayjs().isBefore(".data-time", "hour"));
+  // var isSame = $(dayjs().isSame(".data-time", "hour"));
+  // var isPast = $(dayjs().isAfter(".data-time", "hour"));
+  // if (isFuture === true) {
+  //   inputCol.addClass("future");
+  // } else if (isSame === true) {
+  //   inputCol.addClass("present");
+  // } else if (isPast === true) {
+  //   inputCol.addClass("past");
+  // }
 
 
   // compare timeblock label to current time
   // .past, .present, .future classes change dynamically
   function colorTimeBlocks() {
 
-  }
-
-
-  // put event listener or event delegation on each timeblock
-  // timeblocks object, so one event listener for all?
-  // put it on time-block class?
-  // call userForm()
+    }
 
 
   // "create user input form" function
@@ -183,9 +199,26 @@ $(document).ready(function () {
   // save button
   // event listener on save button
   // call saveInfo()
-  function userForm() {
 
-  }
+  // .time-block event listener
+  $(".time-block").on("click", function () {
+      var inputName = $("<input>").text(timeBlock.userInputName);
+      var inputDesc = $("<textarea>").text(timeBlock.userInputDesc);
+      $(this).append(inputName);
+      $(this).append(inputDesc);
+    });
+
+
+  // put event listener or event delegation on each timeblock
+  // timeblocks object, so one event listener for all?
+  // put it on time-block class?
+  // call userForm()
+
+  // saveBtn event listener
+  $(".row").on("click", "button", function () {
+    console.log("click");
+  });
+
 
   // "save info" function
   // when save button on user input form is clicked, data goes to local storage
