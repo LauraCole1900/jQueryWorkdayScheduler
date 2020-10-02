@@ -7,15 +7,15 @@
 // provided in the css
 // body tag
 // textarea tag
-// jumbotron class
-// description class
-// time-block class
-// row class
-// hour class
-// past class
-// present class
-// future class
-// saveBtn class
+// .jumbotron
+// .description
+// .time-block
+// .row
+// .hour
+// .past
+// .present
+// .future
+// .saveBtn
 // saveBtn i:hover class -- I don't know how this works yet
 
 // from README
@@ -27,7 +27,7 @@
 // create timeblocks for standard business hours
 // link timeblocks to current date & time
 // make timeblocks change color based on future, present and past time
-// user has ability to scroll through dates & times?
+// user has ability to scroll through dates & times? - not necessary
 // create user input form
 
 // user input needs:
@@ -44,48 +44,139 @@
 // saved events persist when page is refreshed
 
 
-
-// global variables
-var cDay = document.getElementById("currentDay");
+$(document).ready(function () {
 
 
 
-// functions
+  // global variables
+  var cDay = document.getElementById("currentDay");
 
-// "display date & time" function
-// grab currentDay
-// attach date & time there
+  var timeBlock = [
+    {
+      label: "9:00 am",
+      value: 0900,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "10:00 am",
+      value: 1000,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "11:00 am",
+      value: 1100,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "12:00 pm",
+      value: 1200,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "1:00 pm",
+      value: 1300,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "2:00 pm",
+      value: 1400,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "3:00 pm",
+      value: 1500,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "4:00 pm",
+      value: 1600,
+      userInputName: "",
+      userInputDesc: "",
+    },
+    {
+      label: "5:00 pm",
+      value: 1700,
+      userInputName: "",
+      userInputDesc: "",
+    },
+  ]
 
-// "create timeblocks" function
-// attach 11 timeblocks to div with class "container"
-// label timeblocks 8am-6pm
-// labels in own column on left side?
 
-// "color timeblocks" function
-// link timeblocks to current time
-// color timeblocks in the future green
-// color present timeblock white
-// color past timeblocks red
 
-// put event listener or event delegation on each timeblock
-// timeblocks object, so one event listener for all?
-// put it on time-block class?
+  // functions
 
-// "create user input form" function
-// date field
-// time field
-// event name field
-// event description field
-// save button
-// event listener on save button?
+  // "display date & time" function
+  // grab currentDay
+  // attach date & time there
+  // call buildTimeBlocks()
+  function currentDay() {
 
-// "save info" function
-// when save button on user input form is clicked, data goes to local storage
-// data persists through page reload
+  }
 
-// "populate scheduler" function
-// pull data from local storage
-// compare date in data to date in scheduler
-// compare time in data to time in scheduler
-// find appropriate timeblock
-// populate data to that timeblock
+
+  // build the page
+  // create 9 timeblocks
+  // define timeblocks
+  // attach timeblocks to .container
+  // call labelTimeBlocks()
+  function buildTimeBlocks() {
+
+  }
+
+
+  // label timeblocks 9am-5pm
+  // labels in own column on left side?
+  // connect timeblocks to current time
+  // call colorTimeBlocks()
+  function labelTimeBlocks() {
+
+  }
+
+
+  // compare timeblock label to current time
+  // .past, .present, .future classes change dynamically
+  function colorTimeBlocks() {
+
+  }
+
+
+  // put event listener or event delegation on each timeblock
+  // timeblocks object, so one event listener for all?
+  // put it on time-block class?
+  // call userForm()
+
+
+  // "create user input form" function
+  // date field?
+  // time field - determined by which timeblock is clicked on
+  // event name field
+  // event description field
+  // save button
+  // event listener on save button
+  // call saveInfo()
+  function userForm() {
+
+  }
+
+  // "save info" function
+  // when save button on user input form is clicked, data goes to local storage
+  // data persists through page reload
+  function saveInfo() {
+
+  }
+
+  // "populate scheduler" function
+  // pull data from local storage
+  // compare date in data to date in scheduler
+  // compare time in data to time in scheduler
+  // find appropriate timeblock
+  // populate data to that timeblock
+
+});
