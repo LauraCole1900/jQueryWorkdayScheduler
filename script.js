@@ -50,6 +50,7 @@ $(document).ready(function () {
 
   // global variables
   var cDay = document.getElementById("currentDay");
+  // var row = $("<main>");
 
   var timeBlock = [
     {
@@ -109,7 +110,6 @@ $(document).ready(function () {
   ]
 
 
-
   // functions
 
   // "display date & time" function
@@ -122,13 +122,45 @@ $(document).ready(function () {
 
 
   // build the page
+  // forEach loop
   // create 9 timeblocks
   // define timeblocks
   // attach timeblocks to .container
   // call labelTimeBlocks()
-  function buildTimeBlocks() {
 
-  }
+  // create rows
+  // call columns();
+  $(timeBlock).each(function (i) {
+    var row = $("<div>");
+    var labelCol = $("<div>");
+    var inputCol = $("<div>");
+    if (i < (timeBlock).length) {
+      row
+        .addClass("row")
+      labelCol
+        .addClass("col-2 hour")
+        .text(timeBlock[i].label)
+      inputCol
+        .addClass("col-10 time-block hour")
+      $(".container").append(row);
+      $(".row").append(labelCol);
+      $(".row").append(inputCol);
+    }
+  });
+
+
+  // $(timeBlock).each(function (i) {
+  //   var labelCol = $("<div>");
+  //   var inputCol = $("<div>");
+  //   labelCol
+  //     .addClass("col-2 hour")
+  //     .text(timeBlock[i].label)
+  //   inputCol
+  //     .addClass("col-10 time-block hour")
+  //   $(".row").append(labelCol);
+  //   $(".row").append(inputCol);
+  // });
+
 
 
   // label timeblocks 9am-5pm
