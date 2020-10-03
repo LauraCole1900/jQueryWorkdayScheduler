@@ -107,14 +107,8 @@ $(document).ready(function () {
   $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY"));
 
 
-  // build the page
-  // forEach loop
-  // create 9 timeblocks
-  // define timeblocks
-  // attach timeblocks to .container
-  // call labelTimeBlocks()
-
-  // create rows
+    // create rows
+  // attach rows to .container
   $(timeBlock).each(function (i) {
     var row = $("<div>");
     if (i < $(timeBlock).length) {
@@ -151,7 +145,7 @@ $(document).ready(function () {
 
     // connect timeblocks to current time
     // set time-block classes based on whether they are earlier, during, or later than the current time
-    var isFuture = $(dayjs().isBefore(timeValue, "hour"));
+    var isFuture = $(dayjs().isBefore((timeValue), "hour"));
     // var isSame = $(dayjs().isSame(".data-time", "hour"));
     // var isPast = $(dayjs().isAfter(".data-time", "hour"));
     if (isFuture === true) {
@@ -185,9 +179,12 @@ $(document).ready(function () {
     // data persists through page reload
     // turn event listener back on for time-blocks
   $(".row").on("click", "button", function () {
-
-    localStorage.setItem("input", (inputDesc).innerHTML);
+    var savedInput = $(this).children("textarea").val()
+    localStorage.setItem("input", savedInput);
     
+    $(".time-block").bind("click", function () {
+
+    })
   });
 
 
