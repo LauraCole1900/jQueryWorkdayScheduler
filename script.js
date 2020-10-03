@@ -52,51 +52,50 @@ $(document).ready(function () {
   var timeBlock = [
     {
       label: "9:00 am",
-      tValue: "09:00",
+      tValue: "09",
       userInput: "",
     },
     {
       label: "10:00 am",
-      tValue: "10:00",
+      tValue: "10",
       userInput: "",
     },
     {
       label: "11:00 am",
-      tValue: "11:00",
+      tValue: "11",
       userInput: "",
     },
     {
       label: "12:00 pm",
-      tValue: "12:00",
+      tValue: "12",
       userInput: "",
     },
     {
       label: "1:00 pm",
-      tValue: "13:00",
+      tValue: "13",
       userInput: "",
     },
     {
       label: "2:00 pm",
-      tValue: "14:00",
+      tValue: "14",
       userInput: "",
     },
     {
       label: "3:00 pm",
-      tValue: "15:00",
+      tValue: "15",
       userInput: "",
     },
     {
       label: "4:00 pm",
-      tValue: "16:00",
+      tValue: "16",
       userInputDesc: "",
     },
     {
       label: "5:00 pm",
-      tValue: "17:00",
+      tValue: "17",
       userInput: "",
     },
   ]
-
 
   var inputDesc = $("<textarea>").text(timeBlock.userInput);
 
@@ -117,6 +116,7 @@ $(document).ready(function () {
         .addClass("row")
       $(".container").append(row);
     }
+    i++
   });
 
   // create columns
@@ -136,20 +136,26 @@ $(document).ready(function () {
       .attr("id", timeValue)
     $(this).append(labelCol);
     $(this).append(inputCol);
+    i++
+  });
 
 
-    // connect timeblocks to current time
-    // set time-block classes based on whether they are earlier, during, or later than the current time
-    var isFuture = $(dayjs().isBefore("timeValue", "hour"));
-    var isSame = $(dayjs().isSame("timeValue", "hour"));
-    var isPast = $(dayjs().isAfter("timeValue", "hour"));
-    if (isFuture === true) {
-      inputCol.addClass("future");
-    } else if (isSame === true) {
-      inputCol.addClass("present");
-    } else if (isPast === true) {
-      inputCol.addClass("past");
+  // connect timeblocks to current time
+  // set time-block classes based on whether they are earlier, during, or later than the current time
+  $(".time-block").each(function (i) {
+    var currentHour = parseInt(dayjs().format('H'));
+    var timeId = $(this).attr("id");
+    // var isFuture = $(dayjs().isBefore(timeId, "hour"));
+    // var isSame = $(dayjs().isSame(timeId, "hour"));
+    // var isPast = $(dayjs().isAfter(timeId, "hour"));
+    if (currentHour < timeId) {
+      $(this).addClass("future");
+    } else if (currentHour == timeId) {
+      $(this).addClass("present");
+    } else if (currentHour > timeId) {
+      $(this).addClass("past");
     }
+    i++
   })
 
 
@@ -157,14 +163,13 @@ $(document).ready(function () {
   // create save buttons
   // class and attribute save buttons
   // append save buttons to time-blocks
-  $("div.time-block").each(function (i) {
-    var timeValue = timeBlock[i].tValue;
+  $(".time-block").each(function (i) {
     var saveCol = $("<button>");
     saveCol
       .addClass("col-1 saveBtn float-right")
       .text("Save")
-      .attr("id", timeValue)
     $(this).append(saveCol);
+    i++
   });
 
 
@@ -175,7 +180,9 @@ $(document).ready(function () {
     inputDesc
       .addClass("description")
       .addClass("float-left")
-    $(this).append(inputDesc).unbind("click");
+    $(this).append(inputDesc)
+      .unbind("click");
+    $(".description").show()
   });
 
 
@@ -188,26 +195,38 @@ $(document).ready(function () {
     var timeInput = $(this).parent().attr("id")
     localStorage.setItem(timeInput, savedInput);
 
-    $(".time-block").on("click", function () {
-      inputDesc
-        .addClass("description")
-        .addClass("float-left")
-      $(this).append(inputDesc).unbind("click");
-    })
+    $(".time-block").bind("click");
 
-
-
-    // "populate scheduler" function
+    // "populate data" function
     // pull data from local storage
-    // compare time in data to time in scheduler
-    // find appropriate timeblock
-    // populate data to that timeblock
-    var when = localStorage.getItem(timeInput);
-    var what = localStorage.getItem(savedInput);
-    alert(when);
-    alert(what);
-    // if (when === div.id) {
-    //   $(".text-block").text(what)
-    // }
+    var when = localStorage.getItem("timeInput");
+    var what = localStorage.getItem("savedInput");
+    $(".description").hide().val("")
+
+    // iterate through time-blocks
+    // for each, check timeInput against attr("id")
+    // if match, render savedInput to that timeBlock
+    $(".time-block").each(function (i) {
+      var timeId = $(this).attr("id")
+      if (when !== null) {
+        tInput = JSON.parse(when);
+        if (tInput === timeId) {
+          sInput = JSON.parse(what)
+          $(this).val(what[i + 9])
+        }
+
+
+      };
+    });
   });
-});
+
+
+    // load items from local storage
+    var load = localStorage.getItem("storage");
+    if (load !== null) {
+      storage = JSON.parse(load);
+      $("textarea").each(function (i) {
+        $(this).val(storage[9 + i])
+      });
+    }
+  });
