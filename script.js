@@ -97,6 +97,7 @@ $(document).ready(function () {
     },
   ]
 
+  var inputDesc = $("<textarea>").text(timeBlock.userInput);
 
 
   // functions
@@ -147,6 +148,9 @@ $(document).ready(function () {
     $(this).append(inputCol);
     $(this).append(saveCol);
 
+
+    // connect timeblocks to current time
+    // set time-block classes based on whether they are earlier, during, or later than the current time
     var isFuture = $(dayjs().isBefore(timeValue, "hour"));
     // var isSame = $(dayjs().isSame(".data-time", "hour"));
     // var isPast = $(dayjs().isAfter(".data-time", "hour"));
@@ -161,68 +165,34 @@ $(document).ready(function () {
   })
 
 
-  // connect timeblocks to current time
-  // call colorTimeBlocks()
-  // var isFuture = $(dayjs().isBefore(".data-time", "hour"));
-  // var isSame = $(dayjs().isSame(".data-time", "hour"));
-  // var isPast = $(dayjs().isAfter(".data-time", "hour"));
-  // if (isFuture === true) {
-  //   inputCol.addClass("future");
-  // } else if (isSame === true) {
-  //   inputCol.addClass("present");
-  // } else if (isPast === true) {
-  //   inputCol.addClass("past");
-  // }
-
-
-  // compare timeblock label to current time
-  // .past, .present, .future classes change dynamically
-  function colorTimeBlocks() {
-
-  }
-
-
   // "create user input form" function
-  // date field?
-  // time field - determined by which timeblock is clicked on
-  // event name field
+  // event listener on time-blocks
   // event description field
-  // save button
-  // event listener on save button
-  // call saveInfo()
+  // turns off event listener on time-blocks
 
   // .time-block event listener
   $(".time-block").on("click", function () {
-    var inputDesc = $("<textarea>").text(timeBlock.userInput);
+    // var inputDesc = $("<textarea>").text(timeBlock.userInput);
     inputDesc
       .addClass("description")
       .addClass("float-left")
-    $(this).append(inputDesc);
-    $(this).unbind("click");
+    $(this).append(inputDesc).unbind("click");
   });
 
 
-  // put event listener or event delegation on each timeblock
-  // timeblocks object, so one event listener for all?
-  // put it on time-block class?
-  // call userForm()
-
-  // saveBtn event listener
+    // saveBtn event listener
+    // puts data in local storage
+    // data persists through page reload
+    // turn event listener back on for time-blocks
   $(".row").on("click", "button", function () {
-    console.log("click");
+
+    localStorage.setItem("input", (inputDesc).innerHTML);
+    
   });
 
-
-  // "save info" function
-  // when save button on user input form is clicked, data goes to local storage
-  // data persists through page reload
-  function saveInfo() {
-
-  }
 
   // "populate scheduler" function
   // pull data from local storage
-  // compare date in data to date in scheduler
   // compare time in data to time in scheduler
   // find appropriate timeblock
   // populate data to that timeblock
