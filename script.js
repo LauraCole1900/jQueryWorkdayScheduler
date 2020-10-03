@@ -97,8 +97,7 @@ $(document).ready(function () {
     },
   ]
 
-  i = 0;
-  var timeValue = timeBlock[i].tValue;
+
   var inputDesc = $("<textarea>").text(timeBlock.userInput);
 
 
@@ -111,7 +110,7 @@ $(document).ready(function () {
 
   // create rows
   // attach rows to .container
-  $(timeBlock).each(function () {
+  $(timeBlock).each(function (i) {
     var row = $("<div>");
     if (i < $(timeBlock).length) {
       row
@@ -124,7 +123,8 @@ $(document).ready(function () {
   // label hour blocks
   // class hour blocks and time-blocks
   // append columns to rows
-  $("div.row").each(function () {
+  $("div.row").each(function (i) {
+    var timeValue = timeBlock[i].tValue;
     var labelCol = $("<div>");
     var inputCol = $("<div>");
 
@@ -140,23 +140,25 @@ $(document).ready(function () {
 
     // connect timeblocks to current time
     // set time-block classes based on whether they are earlier, during, or later than the current time
-    var isFuture = $(dayjs().isBefore((timeValue), "hour"));
-    // var isSame = $(dayjs().isSame(".data-time", "hour"));
-    // var isPast = $(dayjs().isAfter(".data-time", "hour"));
+    var isFuture = $(dayjs().isBefore("timeValue", "hour"));
+    var isSame = $(dayjs().isSame("timeValue", "hour"));
+    var isPast = $(dayjs().isAfter("timeValue", "hour"));
     if (isFuture === true) {
       inputCol.addClass("future");
-      // } else if (isSame === true) {
-      //   inputCol.addClass("present");
-      // } else if (isPast === true) {
-      //   inputCol.addClass("past");
-      // }
+    } else if (isSame === true) {
+      inputCol.addClass("present");
+    } else if (isPast === true) {
+      inputCol.addClass("past");
     }
   })
+
+
 
   // create save buttons
   // class and attribute save buttons
   // append save buttons to time-blocks
-  $("div.time-block").each(function () {
+  $("div.time-block").each(function (i) {
+    var timeValue = timeBlock[i].tValue;
     var saveCol = $("<button>");
     saveCol
       .addClass("col-1 saveBtn float-right")
@@ -165,12 +167,10 @@ $(document).ready(function () {
     $(this).append(saveCol);
   });
 
-  // "create user input form" function
-  // event listener on time-blocks
+
+  // event listener on .time-block
   // event description field
   // turns off event listener on time-blocks
-
-  // .time-block event listener
   $(".time-block").on("click", function () {
     inputDesc
       .addClass("description")
@@ -186,22 +186,28 @@ $(document).ready(function () {
   $(".saveBtn").on("click", function () {
     var savedInput = $(this).siblings("textarea").val()
     var timeInput = $(this).parent().attr("id")
-    alert(timeInput);
     localStorage.setItem(timeInput, savedInput);
 
     $(".time-block").on("click", function () {
       inputDesc
-      .addClass("description")
-      .addClass("float-left")
-    $(this).append(inputDesc).unbind("click");
+        .addClass("description")
+        .addClass("float-left")
+      $(this).append(inputDesc).unbind("click");
     })
+
+
+
+    // "populate scheduler" function
+    // pull data from local storage
+    // compare time in data to time in scheduler
+    // find appropriate timeblock
+    // populate data to that timeblock
+    var when = localStorage.getItem(timeInput);
+    var what = localStorage.getItem(savedInput);
+    alert(when);
+    alert(what);
+    // if (when === div.id) {
+    //   $(".text-block").text(what)
+    // }
   });
-
-
-  // "populate scheduler" function
-  // pull data from local storage
-  // compare time in data to time in scheduler
-  // find appropriate timeblock
-  // populate data to that timeblock
-
 });
