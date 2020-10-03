@@ -53,56 +53,47 @@ $(document).ready(function () {
     {
       label: "9:00 am",
       tValue: "09:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "10:00 am",
       tValue: "10:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "11:00 am",
       tValue: "11:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "12:00 pm",
       tValue: "12:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "1:00 pm",
       tValue: "13:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "2:00 pm",
       tValue: "14:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "3:00 pm",
       tValue: "15:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "4:00 pm",
       tValue: "16:00",
-      userInputName: "",
       userInputDesc: "",
     },
     {
       label: "5:00 pm",
       tValue: "17:00",
-      userInputName: "",
-      userInputDesc: "",
+      userInput: "",
     },
   ]
 
@@ -112,7 +103,7 @@ $(document).ready(function () {
 
   // "display date & time" function
   // attach date & time there
-  $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY HH:mm"));
+  $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY"));
 
 
   // build the page
@@ -156,7 +147,7 @@ $(document).ready(function () {
     $(this).append(inputCol);
     $(this).append(saveCol);
 
-    var isFuture = $(dayjs().isBefore((inputCol).attr("data-time"), "hour"));
+    var isFuture = $(dayjs().isBefore(timeValue, "hour"));
     // var isSame = $(dayjs().isSame(".data-time", "hour"));
     // var isPast = $(dayjs().isAfter(".data-time", "hour"));
     if (isFuture === true) {
@@ -188,7 +179,7 @@ $(document).ready(function () {
   // .past, .present, .future classes change dynamically
   function colorTimeBlocks() {
 
-    }
+  }
 
 
   // "create user input form" function
@@ -202,11 +193,13 @@ $(document).ready(function () {
 
   // .time-block event listener
   $(".time-block").on("click", function () {
-      var inputName = $("<input>").text(timeBlock.userInputName);
-      var inputDesc = $("<textarea>").text(timeBlock.userInputDesc);
-      $(this).append(inputName);
-      $(this).append(inputDesc);
-    });
+    var inputDesc = $("<textarea>").text(timeBlock.userInput);
+    inputDesc
+      .addClass("description")
+      .addClass("float-left")
+    $(this).append(inputDesc);
+    $(this).unbind("click");
+  });
 
 
   // put event listener or event delegation on each timeblock
