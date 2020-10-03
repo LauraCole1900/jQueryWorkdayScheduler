@@ -97,6 +97,8 @@ $(document).ready(function () {
     },
   ]
 
+  i = 0;
+  var timeValue = timeBlock[i].tValue;
   var inputDesc = $("<textarea>").text(timeBlock.userInput);
 
 
@@ -107,9 +109,9 @@ $(document).ready(function () {
   $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY"));
 
 
-    // create rows
+  // create rows
   // attach rows to .container
-  $(timeBlock).each(function (i) {
+  $(timeBlock).each(function () {
     var row = $("<div>");
     if (i < $(timeBlock).length) {
       row
@@ -120,27 +122,20 @@ $(document).ready(function () {
 
   // create columns
   // label hour blocks
-  // class hour blocks, time-blocks and saveBtn
+  // class hour blocks and time-blocks
   // append columns to rows
-  $("div.row").each(function (i) {
+  $("div.row").each(function () {
     var labelCol = $("<div>");
     var inputCol = $("<div>");
-    var saveCol = $("<button>");
-    var timeValue = timeBlock[i].tValue;
 
     labelCol
       .addClass("col-2 hour")
       .text(timeBlock[i].label)
     inputCol
-      .addClass("col-9 time-block")
-      .attr("data-time", timeValue)
-    saveCol
-      .addClass("col-1 saveBtn")
-      .text("Save")
-      .attr("data-time", timeValue)
+      .addClass("col-10 time-block")
+      .attr("id", timeValue)
     $(this).append(labelCol);
     $(this).append(inputCol);
-    $(this).append(saveCol);
 
 
     // connect timeblocks to current time
@@ -158,6 +153,17 @@ $(document).ready(function () {
     }
   })
 
+  // create save buttons
+  // class and attribute save buttons
+  // append save buttons to time-blocks
+  $("div.time-block").each(function () {
+    var saveCol = $("<button>");
+    saveCol
+      .addClass("col-1 saveBtn float-right")
+      .text("Save")
+      .attr("id", timeValue)
+    $(this).append(saveCol);
+  });
 
   // "create user input form" function
   // event listener on time-blocks
@@ -166,7 +172,6 @@ $(document).ready(function () {
 
   // .time-block event listener
   $(".time-block").on("click", function () {
-    // var inputDesc = $("<textarea>").text(timeBlock.userInput);
     inputDesc
       .addClass("description")
       .addClass("float-left")
@@ -174,16 +179,21 @@ $(document).ready(function () {
   });
 
 
-    // saveBtn event listener
-    // puts data in local storage
-    // data persists through page reload
-    // turn event listener back on for time-blocks
-  $(".row").on("click", "button", function () {
-    var savedInput = $(this).children("textarea").val()
-    localStorage.setItem("input", savedInput);
-    
-    $(".time-block").bind("click", function () {
+  // saveBtn event listener
+  // puts data in local storage
+  // data persists through page reload
+  // turn event listener back on for time-blocks
+  $(".saveBtn").on("click", function () {
+    var savedInput = $(this).siblings("textarea").val()
+    var timeInput = $(this).parent().attr("id")
+    alert(timeInput);
+    localStorage.setItem(timeInput, savedInput);
 
+    $(".time-block").on("click", function () {
+      inputDesc
+      .addClass("description")
+      .addClass("float-left")
+    $(this).append(inputDesc).unbind("click");
     })
   });
 
