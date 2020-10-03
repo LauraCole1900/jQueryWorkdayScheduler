@@ -181,6 +181,7 @@ $(document).ready(function () {
       .addClass("description")
       .addClass("float-left")
     $(this).append(inputDesc)
+      // turn off event listener to prevent it from spawning additional textareas that prevent the user enter info
       .unbind("click");
     $(".description").show()
   });
@@ -208,11 +209,12 @@ $(document).ready(function () {
     // if match, render savedInput to that timeBlock
     $(".time-block").each(function (i) {
       var timeId = $(this).attr("id")
+      var pTag = $("<p>")
       if (when !== null) {
         tInput = JSON.parse(when);
         if (tInput === timeId) {
           sInput = JSON.parse(what)
-          $(this).val(what[i + 9])
+          $(this).val(what[i + 9]).appendChild(pTag).text("what")
         }
 
 
@@ -221,12 +223,12 @@ $(document).ready(function () {
   });
 
 
-    // load items from local storage
-    var load = localStorage.getItem("storage");
-    if (load !== null) {
-      storage = JSON.parse(load);
-      $("textarea").each(function (i) {
-        $(this).val(storage[9 + i])
-      });
-    }
-  });
+  // load items from local storage
+  var load = localStorage.getItem("storage");
+  if (load !== null) {
+    storage = JSON.parse(load);
+    $("textarea").each(function (i) {
+      $(this).val(storage[9 + i])
+    });
+  }
+});
