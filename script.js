@@ -1,49 +1,3 @@
-// provided in the html
-// header class jumbotron
-// h1 class display-3
-// p id currentDay class lead
-// div class container
-
-// provided in the css
-// body tag
-// textarea tag
-// .jumbotron
-// .description
-// .time-block
-// .row
-// .hour
-// .past
-// .present
-// .future
-// .saveBtn
-// saveBtn i:hover class -- I don't know how this works yet
-
-// from README
-// You'll need to use the [Moment.js](https://momentjs.com/) library to work with date and time.
-
-
-// display current date at top of planner, in jumbotron
-// display current time at top of planner, in jumbotron?
-// create timeblocks for standard business hours
-// link timeblocks to current date & time
-// make timeblocks change color based on future, present and past time
-// user has ability to scroll through dates & times? - not necessary
-// create user input form
-
-// user input needs:
-// date of event
-// time of event
-// name of event
-// description of event
-// save button that saves to local storage
-
-// user input form activated when user clicks on that timeblock: event listener
-
-// user input once saved must then be placed in the calendar at the set time
-
-// saved events persist when page is refreshed
-
-
 $(document).ready(function () {
 
 
@@ -88,7 +42,7 @@ $(document).ready(function () {
     {
       label: "4:00 pm",
       tValue: "16",
-      userInputDesc: "",
+      userInput: "",
     },
     {
       label: "5:00 pm",
@@ -96,8 +50,6 @@ $(document).ready(function () {
       userInput: "",
     },
   ]
-
-  var inputDesc = $("<textarea>").text(timeBlock.userInput);
 
 
   // functions
@@ -133,7 +85,7 @@ $(document).ready(function () {
       .text(timeBlock[i].label)
     inputCol
       .addClass("col-10 time-block")
-      .attr("id", timeValue)
+      .attr("value", timeValue)
     $(this).append(labelCol);
     $(this).append(inputCol);
     i++
@@ -144,10 +96,7 @@ $(document).ready(function () {
   // set time-block classes based on whether they are earlier, during, or later than the current time
   $(".time-block").each(function (i) {
     var currentHour = parseInt(dayjs().format('H'));
-    var timeId = $(this).attr("id");
-    // var isFuture = $(dayjs().isBefore(timeId, "hour"));
-    // var isSame = $(dayjs().isSame(timeId, "hour"));
-    // var isPast = $(dayjs().isAfter(timeId, "hour"));
+    var timeId = $(this).attr("value");
     if (currentHour < timeId) {
       $(this).addClass("future");
     } else if (currentHour == timeId) {
@@ -159,76 +108,48 @@ $(document).ready(function () {
   })
 
 
-
+  // create textareas
+  // class and id textareas
   // create save buttons
   // class and attribute save buttons
+  // append textareas to time-blocks
   // append save buttons to time-blocks
   $(".time-block").each(function (i) {
     var saveCol = $("<button>");
-    saveCol
-      .addClass("col-1 saveBtn float-right")
-      .text("Save")
-    $(this).append(saveCol);
-    i++
-  });
-
-
-  // event listener on .time-block
-  // event description field
-  // turns off event listener on time-blocks
-  $(".time-block").on("click", function () {
+    var timeValue = timeBlock[i].tValue;
+    var inputDesc = $("<textarea>").text(timeBlock[i].userInput);
     inputDesc
       .addClass("description")
       .addClass("float-left")
+      .attr("id", timeValue)
+    saveCol
+      .addClass("col-1 saveBtn float-right")
+      .text("Save")
     $(this).append(inputDesc)
-      // turn off event listener to prevent it from spawning additional textareas that prevent the user enter info
-      .unbind("click");
+    $(this).append(saveCol);
     $(".description").show()
+    i++
   });
 
 
   // saveBtn event listener
   // puts data in local storage
   // data persists through page reload
-  // turn event listener back on for time-blocks
   $(".saveBtn").on("click", function () {
     var savedInput = $(this).siblings("textarea").val()
-    var timeInput = $(this).parent().attr("id")
+    var timeInput = $(this).parent().attr("value")
     localStorage.setItem(timeInput, savedInput);
-
-    $(".time-block").bind("click");
-
-    // "populate data" function
-    // pull data from local storage
-    var when = localStorage.getItem("timeInput");
-    var what = localStorage.getItem("savedInput");
-    $(".description").hide().val("")
-
-    // iterate through time-blocks
-    // for each, check timeInput against attr("id")
-    // if match, render savedInput to that timeBlock
-    $(".time-block").each(function (i) {
-      var timeId = $(this).attr("id")
-      var pTag = $("<p>")
-      if (when !== null) {
-        tInput = JSON.parse(when);
-        if (tInput === timeId) {
-          sInput = JSON.parse(what)
-          $(this).val(what[i + 9]).appendChild(pTag).text("what")
-        }
-
-
-      };
-    });
   });
 
+  // pull data from localStorage and populate to page
+  $("#09").val(localStorage.getItem("09"))
+  $("#10").val(localStorage.getItem("10"))
+  $("#11").val(localStorage.getItem("11"))
+  $("#12").val(localStorage.getItem("12"))
+  $("#13").val(localStorage.getItem("13"))
+  $("#14").val(localStorage.getItem("14"))
+  $("#15").val(localStorage.getItem("15"))
+  $("#16").val(localStorage.getItem("16"))
+  $("#17").val(localStorage.getItem("17"))
 
-  // load items from local storage
-  var load = localStorage.getItem("storage");
-  if (load !== null) {
-    storage = JSON.parse(load);
-    $("textarea").each(function (i) {
-      $(this).val(storage[9 + i])
-    });
-  }
 });

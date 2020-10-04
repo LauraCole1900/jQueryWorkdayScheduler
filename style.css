@@ -6,11 +6,13 @@ body {
 
 textarea {
   background: transparent;
-  border: none;
+  border: 1px solid lightgray;
   resize: none;
   color: #000000;
   border-left: 1px solid black;
   padding: 10px;
+  height: 75px;
+  width: 90%;
 }
 
 .jumbotron {
