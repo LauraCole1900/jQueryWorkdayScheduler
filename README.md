@@ -18,3 +18,7 @@ Scheduler with events scheduled:
 
 #### Link
 [jQuery workday scheduler](https://lauracole1900.github.io/jQueryWorkdayScheduler/)
+
+#### Credits
+
+Base code was provided by Trilogy Education Services.
