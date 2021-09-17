@@ -3,10 +3,10 @@ $(document).ready(function () {
 
   // global variables
 
-  var timeBlock = [
+  const timeBlock = [
     {
       label: "9:00 am",
-      tValue: "09",
+      tValue: "9",
       userInput: "",
     },
     {
@@ -56,13 +56,13 @@ $(document).ready(function () {
 
   // "display date & time" function
   // attach date & time there
-  $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY"));
+  $("#currentDay").text(dayjs().format("ddd, MMM DD, YYYY h:mm a"));
 
 
   // create rows
   // attach rows to .container
   $(timeBlock).each(function (i) {
-    var row = $("<div>");
+    const row = $("<div>");
     if (i < $(timeBlock).length) {
       row
         .addClass("row")
@@ -76,9 +76,9 @@ $(document).ready(function () {
   // class hour blocks and time-blocks
   // append columns to rows
   $("div.row").each(function (i) {
-    var timeValue = timeBlock[i].tValue;
-    var labelCol = $("<div>");
-    var inputCol = $("<div>");
+    const timeValue = timeBlock[i].tValue;
+    const labelCol = $("<div>");
+    const inputCol = $("<div>");
 
     labelCol
       .addClass("col-2 hour")
@@ -95,8 +95,8 @@ $(document).ready(function () {
   // connect timeblocks to current time
   // set time-block classes based on whether they are earlier, during, or later than the current time
   $(".time-block").each(function (i) {
-    var currentHour = parseInt(dayjs().format('H'));
-    var timeId = $(this).attr("value");
+    const currentHour = parseInt(dayjs().format('H'));
+    const timeId = $(this).attr("value");
     if (currentHour < timeId) {
       $(this).addClass("future");
     } else if (currentHour == timeId) {
@@ -115,9 +115,9 @@ $(document).ready(function () {
   // append textareas to time-blocks
   // append save buttons to time-blocks
   $(".time-block").each(function (i) {
-    var saveCol = $("<button>");
-    var timeValue = timeBlock[i].tValue;
-    var inputDesc = $("<textarea>").text(timeBlock[i].userInput);
+    const saveCol = $("<button>");
+    const timeValue = timeBlock[i].tValue;
+    const inputDesc = $("<textarea>").text(timeBlock[i].userInput);
     inputDesc
       .addClass("description")
       .addClass("float-left")
@@ -136,20 +136,15 @@ $(document).ready(function () {
   // puts data in local storage
   // data persists through page reload
   $(".saveBtn").on("click", function () {
-    var savedInput = $(this).siblings("textarea").val()
-    var timeInput = $(this).parent().attr("value")
+    const savedInput = $(this).siblings("textarea").val()
+    const timeInput = $(this).parent().attr("value")
     localStorage.setItem(timeInput, savedInput);
   });
 
+
   // pull data from localStorage and populate to page
-  $("#09").val(localStorage.getItem("09"))
-  $("#10").val(localStorage.getItem("10"))
-  $("#11").val(localStorage.getItem("11"))
-  $("#12").val(localStorage.getItem("12"))
-  $("#13").val(localStorage.getItem("13"))
-  $("#14").val(localStorage.getItem("14"))
-  $("#15").val(localStorage.getItem("15"))
-  $("#16").val(localStorage.getItem("16"))
-  $("#17").val(localStorage.getItem("17"))
+  for (let i = 9; i < 18; i++) {
+    $(`#${i}`).val(localStorage.getItem(i));
+  }
 
 });
