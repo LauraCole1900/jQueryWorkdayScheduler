@@ -55,7 +55,7 @@ This project is intended to be used to help the user manage their time by allowi
 
 ## Technologies Used
 
-HTML, CSS, jQuery, Day.js
+![HTML5](https://img.shields.io/badge/built%20with-HTML5-f06529) ![CSS3](https://img.shields.io/badge/built%20with-CSS3-2965f1) ![jQuery](https://img.shields.io/badge/built%20with-jQuery-0769ad) ![Day.js](https://img.shields.io/badge/built%20with-Day.js-dd6655)
 
 ## Tests
 
